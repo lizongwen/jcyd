@@ -54,7 +54,20 @@ module.exports = {
 			minify: {
 				removeComments: true,
 				collapseWhitespace: true
-			}
+			},
+			minify:false,
+			chunks: ['vendor','index','app'],
+			chunksSortMode: function(chunk1,chunk2,chunk3){
+				// var orders = [ 'vendor' , 'index' ,'app'];
+				// var orders = [ 'vendor' , 'app' ,'index'];
+				// var orders = [ 'index' , 'vendor' ,'app'];
+				var orders = [ 'index' , 'app' ,'vendor'];
+				// var orders = [ 'app' , 'index' ,'vendor'];
+				// var orders = [ 'app' , 'vendor' ,'index'];
+				var order1 = orders.indexOf(chunk1.names[0]);
+				var order2 = orders.indexOf(chunk2.names[0]);
+				return order1 - order2;
+			},
 		}),
 		// 提取的CSS指定到目标文件夹下的style文件夹下面
 		new ExtractTextPlugin("style/[name]-[chunkhash:5].css"),
