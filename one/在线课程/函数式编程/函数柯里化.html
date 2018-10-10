@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			var checkage=function (min){
+				return function (age){
+					return age>min
+				}
+			}
+			var checkage18=checkage(18)
+			checkage18(20)
+		</script>
+	</body>
+</html>

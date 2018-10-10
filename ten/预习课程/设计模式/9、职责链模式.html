@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//老板
+			function boss(leader){
+				if(leader){
+					this.leader=leader;
+				}
+			}
+			boss.prototype.write=function(type){
+				this.leader.write(type);
+			}
+			
+			//项目经理
+			function leader(coder){
+				if(coder){
+					this.coder=coder;
+				}
+			}
+			leader.prototype.write=function(type){
+				this.coder.write(type);
+			}
+			
+			//码农
+			function coder(type){
+			}
+			coder.prototype.write=function(type){
+				console.log('coding...'+type);
+			}
+			
+			var begin = new boss(new leader(new coder()));
+			begin.write('php');
+		</script>
+	</body>
+</html>

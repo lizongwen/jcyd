@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../../../jquery.1.11.1.js"></script>
+	</head>
+	<body>
+		<script>
+			//页面6个按钮
+			//a b c归属top
+			//d e f归属banner
+			var top={
+				init:function(){
+					this.render();
+					this.bind();
+				},
+				a:4,
+				render:function(){
+					var me = this;
+					me.btna=$("#a");
+					me.btnb=$("#b");
+					me.btnc=$("#c");
+				},
+				bind:function(){
+					var me=this;
+					me.btna.click(function(){
+						//业务逻辑
+						me.test();
+					})
+				},
+				test:function(){
+					a=5;
+				}
+			}
+			var banner={
+				init:function(){
+					this.render();
+					this.bind();
+				},
+				a:4,
+				render:function(){
+					var me = this;
+					me.btna=$("#d");
+				},
+				bind:function(){
+					var me=this;
+					me.btna.click(function(){
+						//业务逻辑
+						me.test();
+					})
+				},
+				test:function(){
+					top.a=6;
+				}
+			}
+			top.init();
+			banner.init();
+		</script>
+	</body>
+</html>

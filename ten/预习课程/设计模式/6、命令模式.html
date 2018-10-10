@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			var org={}
+			org.artillery=function(num){
+				alert(num+'炮'+'开始战斗')
+			}
+			org.infantry=function(num){
+				alert(num+'人'+'开始战斗')
+			}
+			org.leader=function(order){
+				org[order.type](order.num)
+			}
+			org.leader({
+				type:"artillery",
+				num:100
+			})
+			org.leader({
+				type:"infantry",
+				num:100
+			})
+		</script>
+	</body>
+</html>

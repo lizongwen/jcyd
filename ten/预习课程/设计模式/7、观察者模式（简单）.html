@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../../../jquery.1.11.1.js" ></script>
+	</head>
+	<body>
+		<script>
+			(function(){
+				var obj=$({});
+				$.fabu=function(){
+//					obj.trigger(arguments[0],arguments[1])
+					obj.trigger.apply(obj,arguments);
+				}
+				$.jianting=function(){
+//					obj.on(arguments[0],arguments[1])
+					obj.on.apply(obj,arguments);
+				}
+//				$.qingchu=function(){
+//					obj.off.apply(obj,arguments);
+//				}
+			})();
+			$.jianting('/test/ls',function(e,a,b,c){
+				console.log(this)
+				alert(a+"||"+b+'||'+c);
+			})
+			$.jianting('/test/ls',function(e,a,b,c){
+				console.log(this)
+				alert('ok')
+			});
+			setTimeout(function(){
+				$.fabu('/test/ls',[1,2,3])
+			},1000)
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//一
+			var factory={}
+			factory.outputClothes = function (){
+				this.gongren=50;
+				alert("我们有"+this.gongren)
+			}
+			factory.outputShoe = function (){
+				alert("生成鞋子")
+			}
+			factory.transport = function (){
+				alert("运输")
+			}
+			factory.leader=function(param){
+				return	new factory[param]();
+			}
+			var me=factory.leader('outputClothes')
+			alert(me.gongren);
+			
+			//二
+			var XMLHttpFactory=function(){
+			}
+			XMLHttpFactory.createXMLHttp=function(){
+				var XMLHttp = null;
+				if(window.XMLHttpRequest){
+					XMLHttp=new XMLHttpRequest();
+				}else if(window.ActiveXObject){
+					XMLHttp=new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				return XMLHttp;
+			}
+			var AjaxHander=function(){
+				var XMLHttp=XMLHttpFactory.createXMLHttp();
+			}
+		</script>
+	</body>
+</html>

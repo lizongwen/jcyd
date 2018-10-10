@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//尾调用，函数尾部调用一个函数，被调用的函数返回计算值给原函数
+			function funca(n){
+				if(n===1){
+					return n
+				}
+				return funcb(n);
+			}
+			function funcb(n){
+				return n/n;
+			}
+			var rs1=funca(2);
+			console.log(rs1)
+			
+			//尾递归，函数尾部调用的函数为该函数本身
+			function funcc(n){
+				if(n===1){
+					return n
+				}
+				return funcc(n/n);
+			}
+			var rs2=funcc(2);
+			console.log(rs2);
+			
+			//尾递归优化例子
+			//一、定义全局变量接受计算结果
+			var score=0;
+			function add(x){
+				if(x===1) return score+=x;
+				score+=x;
+				add(x-1);
+			}
+			add(3);
+			console.log(score);
+			
+			//一、定义局部变量,外部无法接受到计算结果
+//			function add2(x,score){
+//				if(x===0) return score;
+//				score+=x;
+//				add(x-1,score);
+//			}
+//			var rs3=add2(3,0);
+//			console.log(rs3);
+			
+			//good 优化，定义局部变量
+			function add3(x,total){
+				if(x===1) return x+total;
+				return add3(x-1,x+total);
+			}
+			var rs4=add3(3,0);
+			console.log(rs4)
+		</script>
+	</body>
+</html>

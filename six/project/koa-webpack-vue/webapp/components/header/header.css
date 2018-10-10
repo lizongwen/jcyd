@@ -1,0 +1,9 @@
+.components-header {
+	background: orange;
+	color: white;
+	height: 150px;
+	text-align: center
+}
+.title {
+	font-size: 40px;
+  }

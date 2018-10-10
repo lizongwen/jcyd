@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			//单例模式内部套构造函数模式，配合使用
+			var AA = {
+				createDoor: function(huawen) {
+					//下面if语句加了，new关键字可有可无
+					if(!(this instanceof createDoor)) {
+						return new createDoor();
+					}
+					var _huawen = "普通";
+					if(huawen) {
+						_huawen = huawen;
+					}
+					this.suo = "普通";
+					this.huawen = _huawen;
+					this.create = function() {
+						return "锁" + this.suo + " 花纹" + this.huawen;
+					}
+				}
+			}
+			var BB = {
+				createDoor: function(huawen) {
+					//下面if语句加了，new关键字可有可无
+					if(!(this instanceof createDoor)) {
+						return new createDoor();
+					}
+					var _huawen = "普通";
+					if(huawen) {
+						_huawen = huawen;
+					}
+					this.suo = "普通";
+					this.huawen = _huawen;
+					this.create = function() {
+						return "锁" + this.suo + " 花纹" + this.huawen;
+					}
+				}
+			}
+
+			var xiaozhang = new AA.createDoor() //new可以加或者不加
+			console.log(xiaozhang.create());
+
+			var xiaoli = new BB.createDoor("绚丽");
+			console.log(xiaoli.create())
+		</script>
+	</body>
+
+</html>

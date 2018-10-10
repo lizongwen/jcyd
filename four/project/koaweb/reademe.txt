@@ -1,0 +1,39 @@
+﻿转换ES6语法
+"babel-polyfill"
+"babel-register"
+"babel-preset-es2015"
+"babel-preset-stage-0"
+
+swig渲染需要
+"co": "^4.6.0"
+
+koa框架
+"koa": "^2.3.0"
+koa路由
+"koa-simple-router"
+koa静态文件中间件
+"koa-static"
+koa-swig后台模板引擎
+"koa-swig"
+
+请后台接口模块
+"request": "^2.81.0",
+"request-promise": "^4.2.1"
+
+单测，编写测试js文件，本demo是test文件夹下add.spec.js,同时运行karma init初始化karma.conf.js，配置files参数，运行karma start执行单元测试
+"jasmine-core": "^2.7.0",
+"karma": "^1.7.0",
+"karma-chrome-launcher": "^2.2.0",
+"karma-jasmine": "^1.1.0",
+"karma-phantomjs-launcher": "^1.0.4",
+"phantomjs": "^2.1.7",
+
+e2e测试，编写测试js文件，本demo是test文件夹下e2e.es.js 项目文件夹下放入chromedriver.exe浏览器 运行node e2e.es.js启动测试
+"protractor": "^5.1.2",
+"selenium-standalone": "^6.6.0",
+"selenium-webdriver": "^3.5.0",
+
+接口测试，编写测试js文件，本demo是test文件夹下server.es.js，运行mocha server.js执行测试接口
+"mocha"
+"supertest": "^3.0.0"
+

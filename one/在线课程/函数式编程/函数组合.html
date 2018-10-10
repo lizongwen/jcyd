@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//ES5
+			var compose1=function(f,g){
+				var funa=function(x){
+					return f(g(x));
+				}
+				return funa;
+			}
+			var first1 = function(arr){
+				return arr[0];
+			}
+			var reverse1=function(arr){
+				return arr.reverse()
+			}
+			var toUpperCase1=function(word){
+				return word.toUpperCase();
+			}
+			var split1=function(x){
+				var funb=function (str){
+					return str.split(x);
+				};
+				return funb;
+			}
+			var last1=compose1(first1,reverse1);
+			var f1=compose1(split1(' '),toUpperCase1);
+			
+			//ES6
+			var compose2=(f,g)=>(x=>f(g(x)));
+			var first2=arr=>arr[0];
+			var reverse2=arr=>arr.reverse();
+			var toUpperCase2=word=>word.toUpperCase();
+			var split2 = x=>(str=>str.split(x));
+			var last2=compose2(first2,reverse2);
+			var f2=compose2(split1(' '),toUpperCase2)
+
+
+			//数组翻转后找第一位数据
+			var aa=last1([1,2,3,4,5]);
+			var aa1=f1("abcd efgh")
+			var bb=last2([1,2,3,4,5]);
+			var bb1=f2("abcd efgh")
+			console.log(aa)
+			console.log(aa1)
+			console.log(bb)
+			console.log(bb1)
+		</script>
+	</body>
+</html>

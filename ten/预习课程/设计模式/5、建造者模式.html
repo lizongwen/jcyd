@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			//建造者模式即是各司其职
+			//发送一个请求
+			//$.ajax就是建造者模式
+			//回调即是具体干活的
+			//			$.ajax({
+			//				
+			//			})
+
+			//需要产出的房子
+			function House() {
+				this.room = "";
+				this.toilet = "";
+				this.Kitchen = "";
+			}
+
+			//承包商
+			function Contractor() {}
+			Contractor.prototype.createHouse = function(worker) {
+				worker.createRoom();
+				worker.createToilet();
+				worker.createKitchen();
+				var house = worker.finish();
+				return house
+			}
+
+			//工人
+			function Worker() {}
+			Worker.prototype.createRoom = function() {
+				alert('卧室盖好了')
+			}
+			Worker.prototype.createToilet = function() {
+				alert('客厅盖好了')
+			}
+			Worker.prototype.createKitchen = function() {
+				alert('厨房盖好了')
+			}
+
+			Worker.prototype.finish = function() {
+				var _house = new House();
+				_house.room = 'ok';
+				_house.toilet = 'ok';
+				_house.Kitchen = 'ok';
+				return _house;
+			}
+			
+			var contractor = new Contractor();
+			var worker = new Worker();
+			var house=contractor.createHouse(worker);
+			console.log(house)
+		</script>
+	</body>
+
+</html>

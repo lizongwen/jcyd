@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			[4,5].map(x=>x+1);
+			[1,2].map(x=>{console.log(this);return x+1});
+			[7,8].map(function(x){
+				return x+1;
+			}.bind(this));
+		</script>
+	</body>
+</html>

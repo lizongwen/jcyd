@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//独立的对象 建2个，小王 小李
+			var xw = (function(){
+				var xwj=function(msg){
+					this.menling=msg;
+				}
+				var men;
+				var info={
+					sendMsg:function(msg){
+						if(!men){
+							men=new xwj(msg)
+						}
+						return men;
+					}
+				}
+				return info;
+			})();
+			var xl={
+				callXw:function(msg){
+					var _xw = xw.sendMsg(msg);
+					alert(_xw.menling);
+					_xw=null//用完置空，释放闭包
+				}
+			}
+			console.log(xw)
+			//xl.callXw('didi');
+		</script>
+	</body>
+</html>

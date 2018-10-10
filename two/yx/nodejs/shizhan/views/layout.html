@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    {% block head %}
+    <link rel="stylesheet" href="plugin/bootstrap/bootstrap.css">
+    <script src="plugin/jquery/jquery.js"></script>
+    {% endblock %}
+</head>
+
+<body>
+    {% block content %}{% endblock %}
+</body>
+
+</html>
