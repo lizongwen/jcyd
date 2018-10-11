@@ -57,7 +57,7 @@ module.exports = {
 			},
 			minify:false,
 			chunks: ['vendor','index','app'],
-			chunksSortMode: function(chunk1,chunk2,chunk3){
+			chunksSortMode: function(chunk1,chunk2){
 				// var orders = [ 'vendor' , 'index' ,'app'];
 				// var orders = [ 'vendor' , 'app' ,'index'];
 				// var orders = [ 'index' , 'vendor' ,'app'];
