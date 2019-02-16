@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>柯里化函数</title>
+</head>
+<body>
+	<script>
+		var currying=function(fn){
+			var args=[];
+			return function(){
+				if(arguments.length===0){
+					return fn.apply(this,args)
+				}else{
+					[].push.apply(args,arguments);
+					return arguments.callee;
+				}
+			}
+		}
+		var cost=(function(){
+			var money=0;
+			return function(){
+				for(var i=0,l=arguments.length;i<l;i++){
+					money+=arguments[i]
+				}
+				return money;
+			}
+		})()
+		console.log(cost)
+		var cost=currying(cost)
+		console.log(cost)
+		console.log(cost(100))
+		console.log(cost)
+		cost(100)
+		cost(200)
+		cost(300)
+		console.log(cost())
+	</script>
+</body>
+</html>

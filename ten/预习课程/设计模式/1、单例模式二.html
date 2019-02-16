@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<script src="../../../jquery.1.11.1.js"></script>
-	</head>
-	<body>
-		<script>
-			//页面6个按钮
-			//a b c归属top
-			//d e f归属banner
-			var top={
-				init:function(){
-					this.render();
-					this.bind();
-				},
-				a:4,
-				render:function(){
-					var me = this;
-					me.btna=$("#a");
-					me.btnb=$("#b");
-					me.btnc=$("#c");
-				},
-				bind:function(){
-					var me=this;
-					me.btna.click(function(){
-						//业务逻辑
-						me.test();
-					})
-				},
-				test:function(){
-					a=5;
-				}
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="head">
+		<div id="btna">按钮a</div>
+		<div id="btnb">按钮b</div>
+		<div id="btnc">按钮c</div>
+	</div>
+	<div class="banner">
+		<div id="btnd">按钮d</div>
+		<div id="btne">按钮e</div>
+		<div id="btnf">按钮f</div>
+	</div>
+	<script>
+		//页面6个按钮
+		//a b c归属top
+		//d e f归属banner
+		var head = {
+			init: function () {
+				this.render();
+				this.bind();
+			},
+			a: 4,
+			render: function () {
+				var me = this;
+				me.btna = $("#btna");
+				me.btnb = $("#btnb");
+				me.btnc = $("#btnc");
+			},
+			bind: function () {
+				var me = this;
+				me.btna.click(function () {
+					//业务逻辑
+					me.test();
+				})
+			},
+			test: function () {
+				this.a = 5;
 			}
-			var banner={
-				init:function(){
-					this.render();
-					this.bind();
-				},
-				a:4,
-				render:function(){
-					var me = this;
-					me.btna=$("#d");
-				},
-				bind:function(){
-					var me=this;
-					me.btna.click(function(){
-						//业务逻辑
-						me.test();
-					})
-				},
-				test:function(){
-					top.a=6;
-				}
+		}
+		var banner = {
+			init: function () {
+				this.render();
+				this.bind();
+			},
+			a: 4,
+			render: function () {
+				var me = this;
+				me.btnd = $("#btnd");
+			},
+			bind: function () {
+				var me = this;
+				me.btnd.click(function () {
+					//业务逻辑
+					me.test();
+				})
+			},
+			test: function () {
+				head.a = 6;
 			}
-			top.init();
-			banner.init();
-		</script>
-	</body>
+		}
+		head.init();
+		banner.init();
+	</script>
+</body>
+
 </html>
