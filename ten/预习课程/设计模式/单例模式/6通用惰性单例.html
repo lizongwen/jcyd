@@ -9,7 +9,7 @@
 </head>
 
 <body>
-		<div id="box">登录</div>
+		<div id="box">开始</div>
 		<div id="div1"></div>
 	<script>
 		var getSingle = function (fn) {
@@ -40,10 +40,23 @@
 			}
 			return true;
 		}
+		let createUser=function(){
+			console.log('只调用一次创建user对象')
+			let user={
+				name:'lzw',
+				age:35,
+				getUserName:function(){
+					return this.name
+				}
+			}
+			return user
+		}
+
 
 		let createSingleLogin=getSingle(createLoginLayer);
 		let createSingleIframe=getSingle(createIframe);
 		let bindSingleEvent=getSingle(bindEvent);
+		let createSingleUser=getSingle(createUser);
 
 		let box = document.getElementById('box');
 		box.addEventListener('click', function () {
@@ -52,6 +65,8 @@
 			let LoginLayerIframe=createSingleIframe(createIframe);
 			LoginLayerIframe.src='http://www.baidu.com'
 			bindSingleEvent()
+			let user=createSingleUser();
+			user.getUserName();
 		})
 
 	</script>
