@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+		定义一个单列
+		单例模式只有会有一个new创建的对象实例。
+		*/
+		var Singleton = function (name) {
+			this.name = name;
+		}
+		Singleton.prototype.getName = function () {
+			console.log(this.name);
+		}
+
+		// 获取实例
+		Singleton.getInstance = (function (name) {
+			var instance = null;
+			return function (name) {
+				if (!instance) {
+					instance = new Singleton(name)
+				}
+				return instance
+				// if(instance){
+				// 	return instance
+				// }
+				// return instance = new Singleton(name)
+			}
+		})();
+
+		//调用
+		var a=Singleton.getInstance('lzw');
+		var b=Singleton.getInstance('cl');
+		console.log(a===b)
+	</script>
+</body>
+
+</html>

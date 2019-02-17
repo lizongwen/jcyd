@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>惰性加载函数</title>
+</head>
+
+<body>
+	<div id="box">div盒子</div>
+	<script>
+		var box = document.getElementById('box');
+
+		/*方法一:缺点，每次调用都要判断if*/
+		// var addEvent=function(elem,type,handler){
+		// 	if(window.addEventListener){
+		// 		elem.addEventListener(type,handler,false)
+		// 	}
+		// 	if(window.attachEvent){
+		// 		elem.attachEvent('on'+type,handler)
+		// 	}
+		// }
+
+		/*方法二：优点：每次调用只判断一次。缺点：但是当没用到addEvent函数的时候，这个匿名函数也执行了一次，也就是if条件至少要执行一次*/
+		// var addEvent = (function () {
+		// 	if (window.addEventListener) {
+		// 		return function (elem, type, handler) {
+		// 			elem.addEventListener(type, handler, false)
+		// 		}
+		// 	}else if (window.attachEvent) {
+		// 		return function (elem, type, handler) {
+		// 			elem.attachEvent('on' + type, handler)
+		// 		}
+		// 	}
+		// })();
+
+		/*方法三:优点：没有用到addEvent函数的时候不需要执行if判断。而且，当调用addEvent函数执行一次if判断之后，addEvent函数被重写，那么下次再执行addEvent函数的时候直接触发事件回调，不再执行if判断了*/
+		var addEvent=function(elem,type,handler){
+			if(window.addEventListener){
+				addEvent=function(elem, type, handler){
+					elem.addEventListener(type, handler, false)
+				}
+			}else if(window.attachEvent){
+				addEvent=function(elem, type, handler){
+					elem.attachEvent('on' + type, handler)
+				}
+			}
+			addEvent(elem, type, handler)
+		}
+
+
+		addEvent(box, 'click', function () {
+			console.log(1)
+		});
+	</script>
+</body>
+
+</html>

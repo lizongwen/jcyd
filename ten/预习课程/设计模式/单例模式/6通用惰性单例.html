@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+		<div id="box">登录</div>
+		<div id="div1"></div>
+	<script>
+		var getSingle = function (fn) {
+			let result;
+			return function () {
+				return result || (result = fn.apply(this, arguments))//隔离不变的部分
+			}
+		}
+		//封装变化的部分
+		let createLoginLayer = function () {
+			console.log('只调用一次创建div的函数')
+			let div = document.createElement('div');
+			div.innerHTML = '我是登录浮窗';
+			div.style.display = "none";
+			document.body.appendChild(div);
+			return div
+		}
+		let createIframe=function(){
+			console.log('只调用一次创建iframe的函数')
+			let iframe = document.createElement('iframe');
+			document.body.appendChild(iframe);
+			return iframe
+		}
+		let bindEvent=function(){
+			console.log('只调用一次绑定事件')
+			document.getElementById('div1').onclick=function(){
+				console.log('click')
+			}
+			return true;
+		}
+
+		let createSingleLogin=getSingle(createLoginLayer);
+		let createSingleIframe=getSingle(createIframe);
+		let bindSingleEvent=getSingle(bindEvent);
+
+		let box = document.getElementById('box');
+		box.addEventListener('click', function () {
+			let LoginLayer = createSingleLogin();
+			LoginLayer.style.display = "block";
+			let LoginLayerIframe=createSingleIframe(createIframe);
+			LoginLayerIframe.src='http://www.baidu.com'
+			bindSingleEvent()
+		})
+
+	</script>
+</body>
+
+</html>
