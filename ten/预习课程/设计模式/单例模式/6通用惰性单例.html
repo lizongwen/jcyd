@@ -60,11 +60,15 @@
 
 		let box = document.getElementById('box');
 		box.addEventListener('click', function () {
+			//创建一个div
 			let LoginLayer = createSingleLogin();
 			LoginLayer.style.display = "block";
+			//创建一个iframe
 			let LoginLayerIframe=createSingleIframe(createIframe);
-			LoginLayerIframe.src='http://www.baidu.com'
+			LoginLayerIframe.src='http://www.baidu.com';
+			//绑定一次事件
 			bindSingleEvent()
+			//创建一次user对象
 			let user=createSingleUser();
 			user.getUserName();
 		})
