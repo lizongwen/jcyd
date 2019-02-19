@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		//不变的部分
+		var calculateBonus = function (salary, level) {
+			return obj[level](salary)
+		}
+		//变化的部分
+		obj = {
+			s(salary) {
+				return salary * 4
+			},
+			a(salary) {
+				return salary * 3
+			},
+			b(salary) {
+				return salary * 2
+			}
+		}
+
+		console.log(calculateBonus(1000, 's'))
+		console.log(calculateBonus(800, 's'))
+		console.log(calculateBonus(800, 'a'))
+	</script>
+</body>
+
+</html>
