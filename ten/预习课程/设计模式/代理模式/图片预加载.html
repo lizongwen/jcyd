@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>图片预加载代理</title>
+</head>
+
+<body>
+	<script>
+		var myImage = (function () {
+			var img = new Image()
+			document.body.appendChild(img)
+			return {
+				setSrc: function (src) {
+					img.src = src
+				}
+			}
+		})();
+
+		proxyImage = (function () {
+			var img = new Image()
+			img.onload=function(){
+				myImage.setSrc(this.src)
+			}
+			return {
+				setSrc: function (src) {
+					myImage.setSrc('file:///loading.gif')
+					img.src = src;
+				}
+			}
+		})()
+		proxyImage.setSrc('http://www.dfadfa.gg.com/fa.jpg')
+	</script>
+</body>
+
+</html>

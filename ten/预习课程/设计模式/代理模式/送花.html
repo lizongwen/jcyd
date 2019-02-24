@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>送花</title>
+</head>
+
+<body>
+	<script>
+		var Flower = function (obj) {
+			this.name = obj.name
+		}
+		var xiaoming = {
+			sendFlower: function (traget) {
+				traget.receiveFlower()
+			}
+		}
+		var xiaodidi = {
+			receiveFlower: function (flower) {
+				xiaomm.listenGoodMood(function (flower) {
+					var flower = new Flower({ name: '玫瑰' })
+					xiaomm.receiveFlower(flower);
+				})
+			}
+		}
+		var xiaomm = {
+			receiveFlower: function (flower) {
+				console.log('我收到' + flower.name)
+			},
+			listenGoodMood: function (fn) {
+				setTimeout(function () {
+					fn();
+				}, 1000)
+			}
+		}
+		xiaoming.sendFlower(xiaodidi)
+	</script>
+</body>
+
+</html>
