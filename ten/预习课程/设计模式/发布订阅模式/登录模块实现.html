@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>登录模块</title>
 </head>
+
 <body>
 	<script>
 		var event = {
@@ -49,32 +51,35 @@
 				obj[i] = event[i]
 			}
 		}
-
+		//定义发布者
 		var login = {}
 		installEvent(login)
-		// 订阅
-		var header=(function(){
+		// 订阅过程，定义订阅者
+		var header = (function () {
+			//发布者提供订阅方法，订阅者通过回调执行自己的业务处理
 			login.listen('loginSucc', fn1 = function (data) {
 				header.setAvatar(data)
 			})
-			return{
-				setAvatar:function(data){
-					console.log('头部需要的登录信息',data)
+			return {
+				setAvatar: function (data) {
+					console.log('头部需要的登录信息', data)
 				}
 			}
 		})()
-		var nav=(function(){
+		var nav = (function () {
 			login.listen('loginSucc', fn1 = function (data) {
 				nav.setAvatar(data)
 			})
-			return{
-				setAvatar:function(data){
-					console.log('导航栏需要的登录信息',data)
+			return {
+				setAvatar: function (data) {
+					console.log('导航栏需要的登录信息', data)
 				}
 			}
 		})()
 		console.log(login)
-		login.trigger('loginSucc', {name:'lzw'})
+		//发布过程
+		login.trigger('loginSucc', { name: 'lzw' })
 	</script>
 </body>
+
 </html>
