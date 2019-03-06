@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>登录模块</title>
+</head>
+<body>
+	<script>
+		var event = {
+			clientList: [],
+			listen: function (key, fn) {
+				if (!this.clientList[key]) {
+					this.clientList[key] = [];
+				}
+				this.clientList[key].push(fn)
+			},
+			trigger: function () {
+				var key = Array.prototype.shift.call(arguments),
+					fns = this.clientList[key];
+				if (!fns || fns.length === 0) {
+					return false;
+				}
+				for (var i = 0, fn; fn = fns[i++];) {
+					fn.apply(this, arguments);
+				}
+			},
+			remove: function (key, fn) {
+				var fns = this.clientList[key]
+				if (!fns) {
+					return false;
+				}
+				if (!fn) {
+					fns && (fns.length = 0)
+				} else {
+					for (var l = fns.length - 1; l >= 0; l--) {
+						var _fn = fns[l];
+						if (_fn === fn) {
+							fns.splice(l, 1)
+						}
+					}
+				}
+			}
+		}
+
+		var installEvent = function (obj) {
+			for (var i in event) {
+				obj[i] = event[i]
+			}
+		}
+
+		var login = {}
+		installEvent(login)
+		// 订阅
+		var header=(function(){
+			login.listen('loginSucc', fn1 = function (data) {
+				header.setAvatar(data)
+			})
+			return{
+				setAvatar:function(data){
+					console.log('头部需要的登录信息',data)
+				}
+			}
+		})()
+		var nav=(function(){
+			login.listen('loginSucc', fn1 = function (data) {
+				nav.setAvatar(data)
+			})
+			return{
+				setAvatar:function(data){
+					console.log('导航栏需要的登录信息',data)
+				}
+			}
+		})()
+		console.log(login)
+		login.trigger('loginSucc', {name:'lzw'})
+	</script>
+</body>
+</html>
