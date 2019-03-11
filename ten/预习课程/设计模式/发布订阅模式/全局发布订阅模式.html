@@ -5,30 +5,30 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>登录模块</title>
+	<title>Document</title>
 </head>
 
 <body>
 	<script>
-		var event = {
-			clientList: {},
-			listen: function (key, fn) {
-				if (!this.clientList[key]) {
-					this.clientList[key] = [];
+		var event = (function () {
+			var clientList = {}, listen, trigger, remove;
+			listen = function (key, fn) {
+				if (!clientList[key]) {
+					clientList[key] = [];
 				}
-				this.clientList[key].push(fn)
-			},
-			trigger: function () {
+				clientList[key].push(fn)
+			};
+			trigger = function () {
 				var key = Array.prototype.shift.call(arguments),
-					fns = this.clientList[key];
+					fns = clientList[key];
 				if (!fns || fns.length === 0) {
 					return false;
 				}
 				for (var i = 0, fn; fn = fns[i++];) {
 					fn.apply(this, arguments);
 				}
-			},
-			remove: function (key, fn) {
+			};
+			remove = function (key, fn) {
 				var fns = this.clientList[key]
 				if (!fns) {
 					return false;
@@ -43,22 +43,17 @@
 						}
 					}
 				}
+			};
+			return {
+				listen: listen,
+				trigger: trigger,
+				remove: remove
 			}
-		}
-		console.log(event)
-
-		var installEvent = function (obj) {
-			for (var i in event) {
-				obj[i] = event[i]
-			}
-		}
-		//定义发布者
-		var login = {}
-		installEvent(login)
+		})()
 		// 订阅过程，定义订阅者
 		var header = (function () {
-			//发布者提供订阅方法，订阅者通过回调执行自己的业务处理
-			login.listen('loginSucc', fn1 = function (data) {
+			//全局订阅
+			event.listen('loginSucc', function (data) {
 				header.setAvatar(data)
 			})
 			return {
@@ -68,7 +63,7 @@
 			}
 		})()
 		var nav = (function () {
-			login.listen('loginSucc', fn1 = function (data) {
+			event.listen('loginSucc', function (data) {
 				nav.setAvatar(data)
 			})
 			return {
@@ -77,9 +72,14 @@
 				}
 			}
 		})()
-		console.log(login)
+		//定义发布者
+		var login={};
+		login.trigger=function(){
+			event.trigger('loginSucc', { name: 'lzw' })
+		}
+		login.trigger();
 		//发布过程
-		login.trigger('loginSucc', { name: 'lzw' })
+		
 	</script>
 </body>
 
