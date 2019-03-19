@@ -16,40 +16,36 @@
 		let button1 = document.getElementById('button1'),
 			button2 = document.getElementById('button2'),
 			button3 = document.getElementById('button3');
-		// const setCommand = (button, func) => {
-		// 	button.onclick = () => {
-		// 		func()
-		// 	}
-		// }
-		const setCommand = (command) => {
-			command.execute()
-		}
-		const MenuBar = {
-			refresh() {
-				console.log('刷新菜单');
-			}
-		}
-		const SubMenu = {
-			add() {
-				console.log('增加子菜单');
-			},
-			del() {
-				console.log('删除子菜单')
-			}
-		}
-
-		const RefreshMenuBarCommand = function (receiver) {
+		const RefreshMenuBarCommand = receiver => {
 			return {
-				execute: function () {
-					receiver.refresh()
+				execute: function(){
+					console.log(receiver);
+					console.log('刷新菜单');
 				}
-
 			}
 		}
-		const refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar)
-		// setCommand(button1, refreshMenuBarCommand)
-		//发送命令，参数是命令的接受者接受命令对应的处理函数
-		setCommand(refreshMenuBarCommand)
+		const AddSubMenuCommand = receiver => {
+			return {
+				execute: function(){
+					console.log(receiver);
+					console.log('增加子菜单');
+				}
+			}
+		}
+		const DelSubMenuCommand = receiver => {
+			return {
+				execute: function(){
+					console.log(receiver);
+					console.log('删除子菜单')
+				}
+			}
+		}
+		const refreshMenuBarCommand = RefreshMenuBarCommand()
+		const addSubMenuCommand = AddSubMenuCommand()
+		const delSubMenuCommand = DelSubMenuCommand()
+		button1.onclick = refreshMenuBarCommand.execute
+		button2.onclick = addSubMenuCommand.execute
+		button3.onclick = delSubMenuCommand.execute
 	</script>
 </body>
 
