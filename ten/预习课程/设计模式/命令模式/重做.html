@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>重做</title>
+</head>
+
+<body>
+	<div id="repeat">播放录像</div>
+	<script>
+		let person = {
+			'attack': function () {
+				console.log('攻击一次')
+			},
+			'jump': function () {
+				console.log('跳跃一次')
+			},
+			'defense': function () {
+				console.log('防御一次')
+			},
+			'crouch': function () {
+				console.log('蹲下一次')
+			}
+		}
+
+		let commands = {
+			'119': 'jump',
+			'115': 'crouch',
+			'97': 'defense',
+			'100': 'attack'
+		}
+
+		let makeCommand = function (receiver, state) {
+			return receiver[state]
+		}
+		let commandStack = []
+		document.onkeypress = function (ev) {
+			let keyCode = ev.keyCode,
+				command = makeCommand(person, commands[keyCode])
+			if (command) {
+				command()
+				commandStack.push(command)
+			}
+		}
+		document.getElementById('repeat').onclick=function(){
+			let command;
+			while(command=commandStack.shift()){
+				command();
+			}
+		}
+	</script>
+</body>
+
+</html>
