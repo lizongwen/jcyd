@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		var Folder = function (name) {
+			this.name = name;
+			this.files = []
+		}
+		Folder.prototype.add = function (file) {
+			this.files.push(file)
+		}
+		Folder.prototype.scan = function () {
+			console.log('开始扫描文件夹：' + this.name)
+			this.files.forEach((item) => {
+				item.scan();
+			})
+		}
+
+		var File = function (name) {
+			this.name = name;
+		}
+		File.prototype.scan = function () {
+			console.log('开始扫描文件：' + this.name)
+		}
+
+
+		//创建文件夹
+		var folder = new Folder('学习资料');
+		var folder1 = new Folder('js学习资料');
+		var folder2 = new Folder('vue学习资料');
+		//创建文件
+		var file1 = new File('javascript高级程序设计');
+		var file2 = new File('javascript设计模式');
+		var file3 = new File('精通vue');
+		var file4 = new File('重构与模式');
+		folder.add(file4)
+		folder1.add(file1)
+		folder1.add(file2)
+		folder2.add(file3)
+		folder.add(folder1)
+		folder.add(folder2)
+		//移动U盘文件到这个文件夹
+		var folder3 = new Folder('Nodejs');
+		var file4 = new File('深入浅出nodejs');
+		folder3.add(file4);
+		folder.add(folder3);
+
+		//开始扫描
+		folder.scan();
+	</script>
+</body>
+
+</html>
