@@ -22,7 +22,7 @@
 		}
 
 		// 获取实例
-		Singleton.getInstance = (function (name) {
+		getInstance = (function (name) {
 			var instance = null;
 			return function (name) {
 				if (!instance) {
@@ -33,8 +33,8 @@
 		})();
 
 		//调用
-		var a=Singleton.getInstance('lzw');
-		var b=Singleton.getInstance('cl');
+		var a=getInstance('lzw');
+		var b=getInstance('cl');
 		console.log(a===b)
 	</script>
 </body>
