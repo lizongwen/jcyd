@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="id"></div>
+	<script>
+		let createObj = function (id) {
+			this.id = id;
+			this.initHtml(id, '<div>bbb</div>');
+		}
+		createObj.prototype.initHtml = function (id, html) {
+			let div = document.getElementById(id);
+			div.innerHTML = html;
+		}
+		const proxy = (function () {
+			let instance = null;
+			return function (id) {
+				if (!instance) {
+					instance = new createObj(id);
+				}
+				return instance
+			}
+		})()
+		let a = proxy('id');
+		let b = proxy('id2')
+		console.log(a,b,a === b)
+	</script>
+</body>
+
+</html>
