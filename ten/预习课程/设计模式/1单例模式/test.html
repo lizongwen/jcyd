@@ -11,32 +11,24 @@
 <body>
 	<div id="id"></div>
 	<script>
-		const fn1 = function (val) {
+		const fn1 = function (name) {
 			return {
-				fn1: val
-			}
+				name: name,
+				getName: function () {
+					return this.name
+				}
+			};
 		}
-		const fn2 = function (val) {
-			return {
-				fn2: val
-			}
-		}
-		const fn3 = function (val) {
-			return {
-				fn3: val
-			}
-		}
-
 		const createSign = function (fn) {
 			let instance = null;
 			return function () {
 				return instance || (instance = fn.apply(this, arguments))
 			}
 		}
-		const createSignFn1 = createSign(fn1);
-		let a = createSignFn1(1);
-		let b = createSignFn1(2);
-		console.log(a, b, a === b);
+		const createFn1 = createSign(fn1);
+		let obj1 = createFn1('lzw');
+		let obj2 = createFn1('cl');
+		console.log(obj1, obj2, obj1 == obj2)
 	</script>
 </body>
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		const goByPlane = function (money) {
+			console.log(money)
+		}
+		const goByBicycle = function (money) {
+			console.log(money)
+		}
+		const goByTrain = function (money) {
+			console.log(money)
+		}
+		obj = {
+			a: goByPlane, b: goByBicycle, c: goByTrain
+
+		}
+		let person = {
+			go: function (key, money) {
+
+				obj[key](money)
+			}
+		}
+		person.go('a', 5)
+	</script>
+</body>
+
+</html>
