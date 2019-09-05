@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		//第一方
+		const xm = {
+			send(target, flower) {
+				proxy.receive(target, flower);
+			}
+		}
+		//第二方
+		const xh = {
+			cecha: {},
+			state: false,
+			receive(flower) {
+				console.log("我收到了", flower);
+			},
+			setState(state) {
+				this.state = state;
+			},
+			getState() {
+				return this.state
+			},
+			publishFn() {
+				const key = Array.prototype.shift.call(arguments),
+					fns = this.cecha[key];
+				if (!fns || fns.length === 0) {
+					return false;
+				}
+				for (var i = 0, fn; fn = fns[i++];) {
+					fn.apply(this, arguments);
+				}
+			},
+			//定义订阅方法
+			reserveFn(key, fn) {
+				if (!this.cecha[key]) {
+					this.cecha[key] = [];
+				}
+				this.cecha[key].push(fn)
+			},
+
+		}
+
+		//代理方
+		const proxy = {
+			send(target, flower) {
+				target.receive(flower);
+			},
+			receive(target, flower) {
+				target.reserveFn('state', (res) => {
+					res && this.send(target, flower);
+				})
+			}
+		}
+		xm.send(xh, '花');
+		setTimeout(function () {
+			xh.setState(true);
+			xh.publishFn('state', xh.state);
+		}, 5000)
+	</script>
+</body>
+
+</html>
