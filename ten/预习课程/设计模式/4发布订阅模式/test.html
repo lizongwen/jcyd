@@ -10,77 +10,44 @@
 
 <body>
 	<script>
-
 		//定义发布者
-		const publisher = {}
-		//定义订阅者
-		const reserverA = {
-			lister() {
-				eventCenter.reserveFn('a', fn = function (res) {
-					console.log('a事件发生了', res)
-				})
-				eventCenter.reserveFn('a', fn1 = function (res) {
-					console.log('a事件发生了干其他事情', res)
-				})
-				eventCenter.reserveFn('b', function (res) {
-					console.log('b事件发生了', res)
-				})
+		const publisher = {
+			publish: function () {
+				console.log("开始发布")
+				EventCenter.publish('a', { result: '结果' }, this.callback);
 			},
-			unlister() {
-				eventCenter.removeFn('a', fn1)
+			callback: function (res) {
+				console.log("发布结束",res)
 			}
 		}
-
+		//定义订阅者
+		const lister = {
+			lister: function () {
+				EventCenter.lister('a', this.doSomeThing);
+			},
+			doSomeThing: function (res) {
+				console.log(res);
+			}
+		}
 		//定义调度中心
-		var eventCenter = {
-			//定义目标缓存
-			clientList: {},
-			//定义发布方法
-			publishFn() {
-				const key = Array.prototype.shift.call(arguments),
-					fns = this.clientList[key];
-				if (!fns || fns.length === 0) {
-					return false;
-				}
+		const EventCenter = {
+			cache: {},
+			publish: function () {
+				let key = Array.prototype.shift.call(arguments), callback = Array.prototype.pop.call(arguments), fns = this.cache[key];
+				callback.apply(this,arguments);
 				for (var i = 0, fn; fn = fns[i++];) {
 					fn.apply(this, arguments);
 				}
 			},
-			//定义订阅方法
-			reserveFn(key, fn) {
-				if (!this.clientList[key]) {
-					this.clientList[key] = [];
+			lister: function (key, fn) {
+				if (!this.cache[key]) {
+					this.cache[key] = []
 				}
-				this.clientList[key].push(fn)
-			},
-			//定义取消订阅
-			removeFn(key, fn) {
-				if (!this.clientList.hasOwnProperty(key)) {
-					return false
-				}
-				let fns = this.clientList[key];
-				if (!fn) {
-					delete this.clientList[key];
-					// fns && (fns.length = 0)
-				} else {
-					this.clientList[key] = fns.filter((item) => {
-						return item != fn
-					})
-				}
+				this.cache[key].push(fn);
 			}
 		}
-
-		for (let i in eventCenter) {
-			publisher[i] = eventCenter[i];
-		}
-		//开始订阅
-		reserverA.lister();
-		//取消订阅
-		// reserverA.unlister()
-		// console.log(eventCenter.clientList)
-
-		//开始发布
-		publisher.publishFn('a', { name: 'lzw' });
+		lister.lister();
+		publisher.publish();
 	</script>
 </body>
 

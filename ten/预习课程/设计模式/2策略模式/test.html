@@ -6,29 +6,88 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.box{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			background-color: lawngreen;
+		}
+	</style>
 </head>
 
 <body>
-	<script>
-		const goByPlane = function (money) {
-			console.log(money)
-		}
-		const goByBicycle = function (money) {
-			console.log(money)
-		}
-		const goByTrain = function (money) {
-			console.log(money)
-		}
-		obj = {
-			a: goByPlane, b: goByBicycle, c: goByTrain
 
-		}
-		let person = {
-			go: function (key, money) {
-				obj[key](money)
+	<div id="div" class="box"></div>
+	<script>
+		var tween = {
+			linear: function (t, b, c, d) {
+				return c * t / d + b
+			},
+			easeIn: function (t, b, c, d) {
+				return c * (t /= d) * t + b
+			},
+			strongEaseIn: function (t, b, c, d) {
+				return c * (t /= d) * t * t * t * t + b
+			},
+			strongEaseOut: function (t, b, c, d) {
+				return c * ((t = t / d - 1) * t * t * t * t + 1) + b
+			},
+			sineaseIn: function (t, b, c, d) {
+				return c * (t /= d) * t * t + b
+			},
+			sineaseOut: function (t, b, c, d) {
+				return c * ((t = t / d - 1) * t * t + 1) + b
 			}
 		}
-		person.go('a', 5)
+		const Animate = function (dom) {
+			this.dom = dom;
+			this.startPos = 0;
+			this.startTime = 0;
+			this.endPos = 0;
+			this.easing = null;
+			this.duration = null
+		}
+		Animate.prototype.start = function (propertyName, endPos, duration, easing) {
+			var self=this;
+			this.propertyName = propertyName
+			this.startPos = this.dom.getBoundingClientRect()[propertyName];
+			this.startTime = +new Date;
+			this.endPos = endPos;
+			this.easing = tween[easing];//策略模式，
+			this.duration = duration;
+			let timer=setInterval(()=>{
+				var res=this.step();
+				if(!res){
+					clearInterval(timer);
+				}
+			},19)
+		}
+		Animate.prototype.step=function(){
+			var t = +new Date;
+			if(t>=this.startTime+this.duration){
+				return false;
+			}
+			//策略模式，发同样的参数，给了不同的对象(this.easing)，得出不同的结果，面向对象的多态原理
+			var pos = this.easing(t - this.startTime, this.startPos, this.endPos - this.startPos, this.duration);
+			this.updatePos(pos);
+			return true;
+		}
+		Animate.prototype.updatePos=function(pos){
+			console.log(this.propertyName)
+			this.dom.style[this.propertyName]=pos+"px";
+		}
+		var div = document.getElementById('div');
+		var animate = new Animate(div);
+		console.log(animate)
+		animate.start('left', 1000, 1000, 'easeIn')
+		console.log(animate)
 	</script>
 </body>
 
