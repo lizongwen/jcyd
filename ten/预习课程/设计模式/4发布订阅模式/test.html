@@ -24,9 +24,17 @@
 		const lister = {
 			lister: function () {
 				EventCenter.lister('a', this.doSomeThing);
+				EventCenter.lister('a', this.doSomeThing1);
+				EventCenter.lister('b', this.doSomeThing);
 			},
 			doSomeThing: function (res) {
 				console.log(res);
+			},
+			doSomeThing1: function (res) {
+				console.log(res);
+			},
+			unlister:function(){
+				EventCenter.remove('a',this.doSomeThing1);
 			}
 		}
 		//定义调度中心
@@ -35,6 +43,9 @@
 			publish: function () {
 				let key = Array.prototype.shift.call(arguments), callback = Array.prototype.pop.call(arguments), fns = this.cache[key];
 				callback.apply(this,arguments);
+				if (!fns || fns.length === 0) {
+					return false;
+				}
 				for (var i = 0, fn; fn = fns[i++];) {
 					fn.apply(this, arguments);
 				}
@@ -44,10 +55,26 @@
 					this.cache[key] = []
 				}
 				this.cache[key].push(fn);
+			},
+			remove:function(key,fn){
+				if (!this.cache.hasOwnProperty(key)) {
+					return false
+				}
+				let fns = this.cache[key];
+				if (!fn) {
+					delete this.cache[key];
+					// fns && (fns.length = 0)
+				} else {
+					this.cache[key] = fns.filter((item) => {
+						return item != fn
+					})
+				}
 			}
 		}
 		lister.lister();
+		lister.unlister();
 		publisher.publish();
+		console.log(EventCenter.cache)
 	</script>
 </body>
 
