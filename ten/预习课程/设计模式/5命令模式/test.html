@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="ball" style="position: absolute;background:#000;width:50px;height:50px;top:50px"></div>
+	<div id="box">重置</div>
+
+	<script>
+
+		var tween = {
+			linear: function (t, b, c, d) {
+				return c * t / d + b
+			},
+			easeIn: function (t, b, c, d) {
+				return c * (t /= d) * t + b
+			},
+			strongEaseIn: function (t, b, c, d) {
+				return c * (t /= d) * t * t * t * t + b
+			},
+			strongEaseOut: function (t, b, c, d) {
+				return c * ((t = t / d - 1) * t * t * t * t + 1) + b
+			},
+			sineaseIn: function (t, b, c, d) {
+				return c * (t /= d) * t * t + b
+			},
+			sineaseOut: function (t, b, c, d) {
+				return c * ((t = t / d - 1) * t * t + 1) + b
+			}
+		}
+		var Animate = function (dom) {
+			this.dom = dom;
+			this.startTime = 0;
+			this.startPos = 0;
+			this.endPos = 0;
+			this.easing = null;
+			this.duration = null
+		}
+		Animate.prototype.start = function (propertyName, endPos, duration, easing) {
+			this.startTime = +new Date;
+			this.startPos = this.dom.getBoundingClientRect()[propertyName]
+			this.propertyName = propertyName
+			this.endPos = endPos;
+			this.duration = duration;
+			this.easing = tween[easing]
+			var self = this;
+			var timeId = setInterval(function () {
+				var res = self.step();
+				if (res === false) {
+					console.log('清除定时器')
+					clearInterval(timeId);
+				}
+			}, 19);
+		}
+		Animate.prototype.step = function () {
+			var t = +new Date;
+			if (t >= this.startTime + this.duration) {
+				this.update(this.endPos)
+				return false
+			}
+			var pos = this.easing(t - this.startTime, this.startPos, this.endPos - this.startPos, this.duration);
+			this.update(pos)
+		}
+		Animate.prototype.update = function (pos) {
+			this.dom.style[this.propertyName] = pos + 'px';
+		}
+
+		Animate.prototype.execute = function (command, args) {
+			this[command](args.propertyName, args.endPos, args.duration, args.easing);
+		}
+		const animate = new Animate(document.getElementById('ball'));
+		//服务员
+		const waiter = {
+			execute(command, obj) {
+				this[command](obj);
+			},
+			//倒茶
+			pourTea(obj) {
+				console.log("倒茶", obj);
+			},
+			//上菜
+			upperFood(obj) {
+				console.log("上菜", obj);
+			}
+		}
+		//创建命令
+		const createCommand = function (receiver, key) {
+			var oldPos=null
+			return {
+				execute: function (args) {
+					receiver.execute(key, args);
+					oldPos = receiver.dom.getBoundingClientRect()[args.propertyName]
+				},
+				unexecute:function(args){
+					console.log(args)
+					args.endPos=oldPos;
+					receiver.execute(key,args)
+				}
+			}
+		}
+
+		// const pourTea = createCommand(waiter, 'pourTea');
+		const ball = createCommand(animate, 'start');
+
+
+		//配置命令到命令中心供客户选择
+		const commandCenter = {
+			moveball:ball.execute,
+			cancelMove:ball.unexecute
+		}
+
+		console.log(commandCenter)
+		//客户
+		const customer = {
+			sendCommand(command, args) {
+				commandCenter[command](args);
+			},
+			cancelCommand(command,args){
+				commandCenter[command](args);
+			}
+		}
+		// customer.sendCommand('pourTea', { a: 1 });
+		customer.sendCommand('moveball', {
+			propertyName: 'left',
+			endPos: 1000,
+			duration: 1000,
+			easing: 'linear'
+		})
+		document.getElementById("box").onclick=function(){
+			customer.cancelCommand('cancelMove',{
+			propertyName: 'left',
+			duration: 1000,
+			easing: 'linear'
+		})
+		}
+	</script>
+</body>
+
+</html>
